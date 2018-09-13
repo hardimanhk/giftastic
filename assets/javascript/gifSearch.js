@@ -30,12 +30,14 @@ function showGif() {
             var title = response.data[i].title;
             // get small image
             var small = response.data[i].images.fixed_height_small.url
+            // get download
+            var downloadable = response.data[i].images.fixed_height.mp4;
 
             newDiv.html(
                 `<div class="card gif-render">
                     <img class="card-img-top gif-image" style="height:200px;" src=${gifURLstill} data-still=${gifURLstill} data-animate=${gifURLanimated} data-state="still">
                     <i class="fa fa-heart fa-lg" data-thumbnail=${small}></i>
-                    <i class="fa fa-download fa-lg" data-url=${gifURLanimated}></i>
+                    <a id="gif-download" href=${downloadable} download=${title} ><i class="fa fa-download fa-lg"></i></a>
                     <div class="card-body">
                         <p class="card-text">Title: ${title}<br>Rating: ${rating}</p>
                     </div>
@@ -111,9 +113,9 @@ $(document).on("click", ".fa-heart", function () {
     $("#favorites").prepend(favDiv);
 });
 
-$(document).on("click", ".fa-download", function () {
-    console.log(this);
-});
+// $(document).on("click", "#gif-download", function () {
+//     console.log(this);
+// });
 
 // Calling the renderButtons function to display the intial buttons
 renderButtons();
