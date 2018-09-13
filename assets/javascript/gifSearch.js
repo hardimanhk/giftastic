@@ -1,4 +1,5 @@
 var topics = ["footbal", "soccer", "baseball", "hockey", "tennis"];
+var favGifArray = [];
 
 function showGif() {
     var clicks = $(this).attr("click-count");
@@ -27,7 +28,7 @@ function showGif() {
             // Retrieves the Rating Data
             var rating = response.data[i].rating;
             // Retreives title
-            var title = response.data[i].title;
+            var title = response.data[i].title.trim();
             // get small image
             var small = response.data[i].images.fixed_height_small.url
             // get download
@@ -36,7 +37,7 @@ function showGif() {
             newDiv.html(
                 `<div class="card gif-render">
                     <img class="card-img-top gif-image" style="height:200px;" src=${gifURLstill} data-still=${gifURLstill} data-animate=${gifURLanimated} data-state="still">
-                    <i class="fa fa-heart fa-lg" data-thumbnail=${small}></i>
+                    <i class="fa fa-heart fa-lg" data-thumbnail=${small} data-title=${title}></i>
                     <a id="gif-download" href=${downloadable} download=${title} ><i class="fa fa-download fa-lg"></i></a>
                     <div class="card-body">
                         <p class="card-text">Title: ${title}<br>Rating: ${rating}</p>
@@ -89,6 +90,12 @@ $("#add-gif").on("click", function (event) {
     $("#gif-input").val("");
 });
 
+$("#clear-faves").click(function() {
+    $("#favorites").empty();
+    localStorage.removeItem("allGifs");
+    favGifArray = [];
+});
+
 // Adding click event listeners to all elements with a class of "movie"
 $(document).on("click", ".gif", showGif);
 
@@ -104,14 +111,26 @@ $(document).on("click", ".gif-image", function () {
 });
 
 $(document).on("click", ".fa-heart", function () {
-    console.log(this);
-    var favDiv = $("<div>");
-    favDiv.addClass("favorite");
     var smallURL = $(this).attr("data-thumbnail");
-    var newImg = $("<img>").attr("src", smallURL);
-    favDiv.append(newImg);
-    $("#favorites").prepend(favDiv);
+    favGifArray.push(smallURL);
+    localStorage.setItem("allGifs", JSON.stringify(favGifArray));
+    renderFavGifs();
 });
+
+function renderFavGifs() {
+    if (localStorage.getItem("allGifs") === null) {
+        $("#favorites").text("No favorites yet.")
+    }
+    else {
+        $("#favorites").text("");
+        favGifArray = JSON.parse(localStorage.allGifs);
+        for (var i = 0; i < favGifArray.length; i++) {
+            var imgDiv = $("<img>").attr("src", favGifArray[i]);
+            imgDiv.addClass("favGif");
+            $("#favorites").prepend(imgDiv);
+        }
+    }  
+}
 
 // $(document).on("click", "#gif-download", function () {
 //     console.log(this);
@@ -119,3 +138,5 @@ $(document).on("click", ".fa-heart", function () {
 
 // Calling the renderButtons function to display the intial buttons
 renderButtons();
+renderFavGifs();
+

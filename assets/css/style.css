@@ -48,6 +48,14 @@ body {
     margin-top: 10px;
 }
 
-.favorite {
+.favGif {
     margin-top: 10px;
+}
+
+#clear-faves {
+    margin-top: 5px;
+    background: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
