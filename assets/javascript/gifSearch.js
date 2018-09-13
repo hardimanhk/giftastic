@@ -6,7 +6,7 @@ function showGif() {
     var myAPI = "pPBJWIlzXd6iKV3VSgrpNSL4fG3DQF6m";
     var offset = 10 * clicks;
     // "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5"
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + gifTerm + "&api_key=" + myAPI + "&limit=10&offset=" + offset;
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifTerm + "&api_key=" + myAPI + "&limit=10&offset=" + offset;
     clicks++;
     $(this).attr("click-count", clicks);
 
@@ -28,10 +28,14 @@ function showGif() {
             var rating = response.data[i].rating;
             // Retreives title
             var title = response.data[i].title;
+            // get small image
+            var small = response.data[i].images.fixed_height_small.url
 
             newDiv.html(
                 `<div class="card gif-render">
                     <img class="card-img-top gif-image" style="height:200px;" src=${gifURLstill} data-still=${gifURLstill} data-animate=${gifURLanimated} data-state="still">
+                    <i class="fa fa-heart fa-lg" data-thumbnail=${small}></i>
+                    <i class="fa fa-download fa-lg" data-url=${gifURLanimated}></i>
                     <div class="card-body">
                         <p class="card-text">Title: ${title}<br>Rating: ${rating}</p>
                     </div>
@@ -79,6 +83,8 @@ $("#add-gif").on("click", function (event) {
 
     // Calling renderButtons which handles the processing of our movie array
     renderButtons();
+
+    $("#gif-input").val("");
 });
 
 // Adding click event listeners to all elements with a class of "movie"
@@ -93,6 +99,20 @@ $(document).on("click", ".gif-image", function () {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
     }
+});
+
+$(document).on("click", ".fa-heart", function () {
+    console.log(this);
+    var favDiv = $("<div>");
+    favDiv.addClass("favorite");
+    var smallURL = $(this).attr("data-thumbnail");
+    var newImg = $("<img>").attr("src", smallURL);
+    favDiv.append(newImg);
+    $("#favorites").prepend(favDiv);
+});
+
+$(document).on("click", ".fa-download", function () {
+    console.log(this);
 });
 
 // Calling the renderButtons function to display the intial buttons

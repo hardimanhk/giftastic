@@ -1,5 +1,5 @@
 body {
-    background: lightcyan;
+    background: lightgray;
 }
 
 .gif-render {
@@ -24,4 +24,30 @@ body {
     color: white;
     border: none;
     border-radius: 5px;
+}
+
+.fa-heart {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    z-index: 1;
+    color: turquoise;
+    cursor: pointer;
+}
+
+.fa-download {
+    position: absolute;
+    top: 10px;
+    left: 45px;
+    z-index: 1;
+    color: lightgray;
+    cursor: pointer;
+}
+
+#favorite-words {
+    margin-top: 10px;
+}
+
+.favorite {
+    margin-top: 10px;
 }
