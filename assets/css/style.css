@@ -1,0 +1,27 @@
+body {
+    background: lightcyan;
+}
+
+.gif-render {
+    float: left;
+}
+
+.gif {
+    margin: 5px;
+    background: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.gif-render {
+    margin: 10px;
+}
+
+#add-gif {
+    margin-top: 5px;
+    background: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
