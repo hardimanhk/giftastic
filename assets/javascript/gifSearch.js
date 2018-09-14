@@ -1,4 +1,4 @@
-var topics = ["footbal", "soccer", "baseball", "hockey", "tennis"];
+var topics = ["football", "soccer", "baseball", "hockey", "tennis"];
 var favGifArray = [];
 
 function showGif() {
